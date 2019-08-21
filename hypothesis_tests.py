@@ -11,7 +11,7 @@ import numpy as np
 from scipy import stats
 import math
 
-def create_sample_dists(cleaned_data, y_var=None, categories=[]):
+def create_sample_dists(cleaned_data, y_var=None, x_var=None, categories=[], samplesize=75, numsamples=50):
     """
     Each hypothesis test will require you to create a sample distribution from your data
     Best make a repeatable function
@@ -23,14 +23,16 @@ def create_sample_dists(cleaned_data, y_var=None, categories=[]):
 
     """
     df = cleaned_data
-    for cat in categories:
-        dftemp=df.loc[ df.y_var == cat]
-        htest_dfs.append(dftemp)
     
-    htest_dfs = []
-
-    # Main chunk of code using t-tests or z-tests
-    return htest_dfs
+    dflist = []
+    
+    for cat in categories:
+        dftemp = df.loc[ df[x_var] == cat][y_var]
+        sampler = np.random.choice(dftemp,size=(samplesize,numsamples))
+        sample_prop = sampler.mean(axis=0)
+        dflist.append(sample_prop)
+    
+    return dflist
 
 def compare_pval_alpha(p_val, alpha):
     status = ''
@@ -52,7 +54,7 @@ def hypothesis_test_one(cleaned_data, alpha = None):
     :return:
     """
     # Get data for tests
-    comparison_groups = create_sample_dists(cleaned_data=None, y_var=None, categories=[])
+    comparison_groups = create_sample_dists(cleaned_data=None, y_var=None, x_var=None, categories=[])
 
     ###
     # Main chunk of code using t-tests or z-tests, effect size, power, etc
