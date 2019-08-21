@@ -22,6 +22,11 @@ def create_sample_dists(cleaned_data, y_var=None, categories=[]):
     :return: a list of sample distributions to be used in subsequent t-tests
 
     """
+    df = cleaned_data
+    for cat in categories:
+        dftemp=df.loc[ df.y_var == cat]
+        htest_dfs.append(dftemp)
+    
     htest_dfs = []
 
     # Main chunk of code using t-tests or z-tests
@@ -36,7 +41,7 @@ def compare_pval_alpha(p_val, alpha):
     return status
 
 
-def hypothesis_test_one(alpha = None, cleaned_data):
+def hypothesis_test_one(cleaned_data, alpha = None):
     """
     Describe the purpose of your hypothesis test in the docstring
     These functions should be able to test different levels of alpha for the hypothesis test.
