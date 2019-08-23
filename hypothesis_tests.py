@@ -168,7 +168,7 @@ def hypothesis_test_three(cleaned_data, alpha=.05):
         # calculations for effect size, power, etc here as well
 
     print(f'Based on the p value of {p_val} and our aplha of {alpha} we {status.lower()}  the null hypothesis.'
-          f'\n Due to these results, we  {assertion} state that there is a difference in citation rate between these colors')
+          f'\n Due to these results, we  {assertion} state that there is a difference in citation rate between these makes')
 
 
 def hypothesis_test_four(cleaned_data):

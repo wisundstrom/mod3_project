@@ -47,34 +47,19 @@ def create_sample_dists(cleaned_data, y_var=None, x_var=None, categories=[], sam
     return dflist
 
 
-def overlapping_density(package=None, input_vars=None, target_vars=None, categories=None):
-    """
-    Set the characteristics of your overlapping density plot
-    All arguments are set to None purely as a filler right now
-
-    Function takes package name, input variables(categories), and target variable as input.
-    Returns a figure
-
-    Should be able to call this function in later visualization code.
-
-    PARAMETERS
-
-    :param package:        should only take sns or matplotlib as inputs, any other value should throw and error
-    :param input_vars:     should take the x variables/categories you want to plot
-    :param target_vars:    the y variable of your plot, what you are comparing
-    :return:               fig to be enhanced in subsequent visualization functions
+def overlapping_density(package=None, input_vars=None, target_vars=None, categories=None, output_image_name=None):
+    """ 
+    Set the characteristics of your overlapping density plot and returns fig
     """
 
     # Set size of figure
     fig = plt.figure(figsize=(16, 10), dpi=80)
     sns.set(color_codes=True)
 
-
     # Starter code for figuring out which package to use
     if package == "sns":
         for counter,value in enumerate(input_vars):
             sns.kdeplot(value, label=categories[counter],shade=True)
-#             plt.axvline(stat.mean(value), color='green', linestyle='--', lw=2, label='sample mean')
             plt.xlabel('Means', fontsize=med)#, figure = fig)
             plt.ylabel('Sample counts', fontsize=med)#, figure = fig)
             plt.title('Overlapping mean desnsity', fontsize=large)#, figure = fig)
@@ -84,9 +69,9 @@ def overlapping_density(package=None, input_vars=None, target_vars=None, categor
         for variable in input_vars:
             plt.plot(variable, label=None, linewidth=None, color=None, figure = fig)
 
+
+    plt.savefig(f'img/{output_image_name}.png', transparent = True, figure = fig)
 #     return fig
-
-
 
 def boxplot_plot(package=None, input_vars=None, target_vars=None):
     """
@@ -122,42 +107,33 @@ def commercial_ticket_plots(df, target_vars = None, input_vars= None, output_ima
     df.groupby([input_vars,target_vars]).size().unstack().plot(kind='bar',stacked=True)
     row_keys = df[input_vars].unique()
     plt.xlabel('Vehicles colors', fontsize=med)#, figure = fig)
-    plt.ylabel('Stop counts', fontsize=med)#, figure = fig)
+    plt.ylabel('Citation rates', fontsize=med)#, figure = fig)
     plt.title('Commercial vehicles', fontsize=large)#, figure = fig)
     plt.xticks(np.arange(len(row_keys)),row_keys,rotation=0, fontsize=med)
 #      plt.xticks(fontsize=med)
     plt.yticks(fontsize=med)
-    plt.legend()
+    
   
     
 #     return fig
     
-    ###
 
-    # Starter code for labeling the image
-#     plt.xlabel('Vehicles colors', figure = fig)
-#     plt.ylabel('Stop counts', figure = fig)
-#     plt.title('Commercial vehicles', figure= fig)
-#     plt.legend()
-
-    # exporting the image to the img folder
-#     plt.savefig(f'img/{output_image_name}.png', transparent = True, figure = fig)
-#     return fig
-
-
-# please fully flesh out this function to meet same specifications of visualization one
-
-def color_plot(arr,categories=None):#output_image_name):
+def color_plot(arr,categories=None, output_image_name=None):
     arr_list = np.asarray(arr).mean(axis=1)
     arr_lst = np.vstack((arr_list, 1-arr_list))
     df = pd.DataFrame(arr_lst.T)
     df.plot(kind='bar',stacked=True)
-    plt.xlabel('Vehicles color', fontsize=med)
-    plt.ylabel('Stop counts', fontsize=med)
-    plt.title('Commercial vehicles')
+#     sns.set(color_codes=True)
+    plt.xlabel('Vehicle colors', fontsize=med)
+    plt.ylabel('Citation rates', fontsize=med)
+    plt.title('Ticketed vs Non-Ticketed vehicle colors')
     plt.xticks(np.arange(len(categories)),categories,rotation=0)#, fontsize=med)
+    plt.legend(labels=['Ticketed','Non-Ticketed'])
+    
+    
+    plt.savefig(f'img/{output_image_name}.png', transparent = True)#, figure = fig)
 
-    pass
+#     pass
 
 def visualization_three(output_image_name):
     pass

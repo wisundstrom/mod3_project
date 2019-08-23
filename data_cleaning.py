@@ -51,6 +51,6 @@ on modules.
     cleaning_data2 = remove_nulls(cleaning_data1)
     cleaned_data = remove_duplicates(cleaning_data2)
 
-    # cleaned_data.to_csv('./data/cleaned_for_testing.csv')
+    cleaned_data.to_csv('./data/cleaned_for_testing.csv')
 
     return cleaned_data
