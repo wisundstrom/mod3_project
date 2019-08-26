@@ -1,9 +1,7 @@
 """
-This module is for your final visualization code.
-One visualization per hypothesis question is required.
-A framework for each type of visualization is provided.
+This module is designed for final visualization code.
 """
-
+# import all the necessory python packages
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
@@ -24,17 +22,12 @@ plt.rcParams.update(params)
 plt.style.use('seaborn-whitegrid')
 sns.set_style("white")
 
-def create_sample_dists(cleaned_data, y_var=None, x_var=None, categories=[], samplesize=30, numsamples=400):
+def create_sample_dists(df, y_var=None, x_var=None, categories=[], samplesize=30, numsamples=400):
     np.random.seed(5)
     """
-    Each hypothesis test will require you to create a sample distribution from your data
-    Best make a repeatable function
-    :param cleaned_data:
-    :param y_var: The numeric variable you are comparing
-    :param categories: the categories whose means you are comparing
-    :return: a list of sample distributions to be used in subsequent t-tests
+    takes the sample data and retun a list of sample distributions 
     """
-    df = cleaned_data
+#     df = cleaned_data
     
     dflist = []
     
@@ -60,17 +53,20 @@ def overlapping_density(package=None, input_vars=None, target_vars=None, categor
     if package == "sns":
         for counter,value in enumerate(input_vars):
             sns.kdeplot(value, label=categories[counter],shade=True)
+            plt.title('Overlapping mean desnsity', fontsize=large)#, figure = fig)
+            plt.legend('xyz', fontsize=med)
             plt.xlabel('Means', fontsize=med)#, figure = fig)
             plt.ylabel('Sample counts', fontsize=med)#, figure = fig)
-            plt.title('Overlapping mean desnsity', fontsize=large)#, figure = fig)
+         
             plt.xticks(fontsize=med)
             plt.yticks(fontsize=med)
+            
     elif package == 'matplotlib':
         for variable in input_vars:
             plt.plot(variable, label=None, linewidth=None, color=None, figure = fig)
 
 
-    plt.savefig(f'img/{output_image_name}.png', transparent = True, figure = fig)
+#     plt.savefig(f'img/{output_image_name}.png', transparent = True, figure = fig)
 #     return fig
 
 def boxplot_plot(package=None, input_vars=None, target_vars=None):
@@ -94,14 +90,7 @@ def boxplot_plot(package=None, input_vars=None, target_vars=None):
 
 def commercial_ticket_plots(df, target_vars = None, input_vars= None, output_image_name=None):
     """
-    The visualization functions are what is used to create each individual image.
-    The function should be repeatable if not generalizable
-    The function will call either the boxplot or density plot functions you wrote above
-
-    :param target_var:
-    :param input_vars:
-    :param output_image_name: the desired name for the image saved
-    :return: outputs a saved png file and returns a fig object for testing
+    takes the dataframe and returns a plot
     """
     # plot graph
     df.groupby([input_vars,target_vars]).size().unstack().plot(kind='bar',stacked=True)
@@ -109,7 +98,7 @@ def commercial_ticket_plots(df, target_vars = None, input_vars= None, output_ima
     plt.xlabel('Vehicles colors', fontsize=med)#, figure = fig)
     plt.ylabel('Citation rates', fontsize=med)#, figure = fig)
     plt.title('Commercial vehicles', fontsize=large)#, figure = fig)
-    plt.xticks(np.arange(len(row_keys)),row_keys,rotation=0, fontsize=med)
+    plt.xticks(np.arange(len(row_keys)),row_keys, fontsize=med)#,rotation=0
 #      plt.xticks(fontsize=med)
     plt.yticks(fontsize=med)
     
@@ -124,16 +113,16 @@ def color_plot(arr,categories=None, output_image_name=None):
     df = pd.DataFrame(arr_lst.T)
     df.plot(kind='bar',stacked=True)
 #     sns.set(color_codes=True)
-    plt.xlabel('Vehicle colors', fontsize=med)
+    plt.xlabel('Vehicle makes', fontsize=med)
     plt.ylabel('Citation rates', fontsize=med)
     plt.title('Ticketed vs Non-Ticketed vehicle colors')
-    plt.xticks(np.arange(len(categories)),categories,rotation=0)#, fontsize=med)
+    plt.xticks(np.arange(4),categories,rotation=0)#, fontsize=med) 
     plt.legend(labels=['Ticketed','Non-Ticketed'])
     
     
-    plt.savefig(f'img/{output_image_name}.png', transparent = True)#, figure = fig)
+#     plt.savefig(f'img/{output_image_name}.png', transparent = True)#, figure = fig)
 
-#     pass
+    pass
 
 def visualization_three(output_image_name):
     pass

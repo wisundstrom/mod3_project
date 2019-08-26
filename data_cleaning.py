@@ -2,9 +2,6 @@
 This module is for your data cleaning.
 It should be repeatable.
 
-## PRECLEANING
-There should be a separate script recording how you transformed the json api ca
-lls into a dataframe and csv.
 
 ## SUPPORT FUNCTIONS
 cleans part of the dataset and return the partially cleaned data.
